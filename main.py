@@ -61,7 +61,7 @@ def replace_linear_with_lora(module, r=8, lora_alpha=32, lora_dropout=0.05):
                 in_features, out_features,
                 r=r, lora_alpha=lora_alpha, lora_dropout=lora_dropout,
                 bias=bias
-            )
+            ).to(device)
             # Copy weights
             new_lora_layer.weight = child.weight
             if bias:
@@ -92,7 +92,7 @@ class DummyDataset(torch.utils.data.Dataset):
             max_length=max_length,
             truncation=True,
             padding="max_length"
-        )
+        ).to(device)
         return encoding.input_ids.squeeze(0), encoding.attention_mask.squeeze(0)
 
 dataset = DummyDataset(tokenizer, num_samples=500)

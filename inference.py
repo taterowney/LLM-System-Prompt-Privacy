@@ -1,23 +1,14 @@
 import torch
 from transformers import AutoTokenizer
 
-# from main import get_device, model_name, r, lora_alpha, lora_dropout
+from main import get_device, model_name, r, lora_alpha, lora_dropout, create_model
 
-model_name = 'meta-llama/Llama-3.2-1B'
-
-def get_device():
-    if torch.cuda.is_available():
-        return torch.device("cuda")
-    elif torch.backends.mps.is_available():
-        return torch.device("mps")
-    else:
-        return torch.device("cpu")
 
 device = get_device()
 
-model = torch.load("lora_finetuned_llama.pt", map_location=device)
-
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+model, tokenizer = create_model()
+model.to(device)
+model.load_state_dict(torch.load("lora_finetuned_llama.pt", weights_only=True))
 
 def infer(prompt, max_length=128):
     input_ids = tokenizer.encode(prompt, return_tensors="pt").to(device)

@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoTokenizer
 
-from main import get_device, model_name, r, lora_alpha, lora_dropout, create_model
+from fine_tune_test import get_device, model_name, r, lora_alpha, lora_dropout, create_model
 
 
 device = get_device()

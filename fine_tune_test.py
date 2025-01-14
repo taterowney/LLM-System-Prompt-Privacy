@@ -5,7 +5,6 @@ import loralib as lora
 from huggingface_hub import login
 
 # Hyperparameters
-# model_name = 'meta-llama/Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8'
 model_name = 'meta-llama/Llama-3.2-1B'
 # model_name = 'meta-llama/Llama-3.2-3B'
 
@@ -101,7 +100,6 @@ class DummyDataset(torch.utils.data.Dataset):
 
 
 def tune(model):
-    # Set Up Optimizer
     # Freeze all non-LoRA parameters by default
     for param in model.parameters():
         param.requires_grad = False
